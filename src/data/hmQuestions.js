@@ -197,7 +197,7 @@ export const hmQuestions = [
   },
 { 
   id: 5,
-  question: "Jaspal Singh repays a loan of ₹118000 by paying monthly installments starting with ₹1000 and increasing each month by ₹100. Find the 30th installment and the remaining loan after 30 installments.",
+  question: "J Singh repays a loan of ₹118000 by paying monthly installments starting with ₹1000 and increasing each month by ₹100. Find the 30th installment and the remaining loan after 30 installments.",
 
   steps: [
     {
