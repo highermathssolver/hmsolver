@@ -1,29 +1,29 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
-import { MathJaxContext } from "better-react-mathjax"; // ✅ ADDED
+import { MathJaxContext } from "better-react-mathjax";
 
 import Home from "./pages/Home";
-import Solver from "./pages/Solver";
+import Solver from "./pages/Solver"; 
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
-// 🔥 HM + JEE PAGES
+// HM + JEE PAGES
 import HMPage from "./pages/HMPage";
 import JEEYearPage from "./pages/JEEYearPage";
 import JEEShiftPage from "./pages/JEEShiftPage";
 import JEEQuestionsPage from "./pages/JEEQuestionsPage";
 
-// ✅ NEW WRAPPER
+// SOLVER WRAPPER
 import SolverWithLayout from "./pages/SolverWithLayout";
 
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 
-// ✅ MathJax Config
+// MathJax Config
 const mathJaxConfig = {
   tex: {
     inlineMath: [["\\(", "\\)"]],
@@ -38,12 +38,12 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
 
-        {/* ================= PUBLIC ================= */}
+        {/* PUBLIC */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        {/* ================= HM FLOW ================= */}
+        {/* HM FLOW */}
         <Route
           path="/hm"
           element={
@@ -64,7 +64,7 @@ function AnimatedRoutes() {
           }
         />
 
-        {/* ================= JEE FLOW ================= */}
+        {/* JEE FLOW */}
         <Route
           path="/jee"
           element={
@@ -98,7 +98,7 @@ function AnimatedRoutes() {
           }
         />
 
-        {/* ================= GENERAL SOLVER ================= */}
+        {/* GENERAL SOLVER */}
         <Route
           path="/solve"
           element={
@@ -110,7 +110,7 @@ function AnimatedRoutes() {
           }
         />
 
-        {/* ================= PROFILE ================= */}
+        {/* PROFILE */}
         <Route
           path="/profile"
           element={
@@ -122,7 +122,7 @@ function AnimatedRoutes() {
           }
         />
 
-        {/* ================= DASHBOARD ================= */}
+        {/* DASHBOARD */}
         <Route
           path="/dashboard"
           element={
@@ -134,7 +134,7 @@ function AnimatedRoutes() {
           }
         />
 
-        {/* ================= FALLBACK ================= */}
+        {/* FALLBACK */}
         <Route
           path="*"
           element={
@@ -151,13 +151,13 @@ function AnimatedRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AuthProvider>
-        {/* ✅ Wrap EVERYTHING with MathJax */}
         <MathJaxContext config={mathJaxConfig}>
           <AnimatedRoutes />
         </MathJaxContext>
       </AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
+
