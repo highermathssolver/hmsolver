@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { hmQuestions } from "../data/hmQuestions";
 
 import { markSolved } from "../utils/markSolved";
-import { updateUserStats } from "../utils/updateStat";
+import { updateUserStats } from "../utils/updateStats";
 
 import { MathJax } from "better-react-mathjax";
 
