@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { hmQuestions } from "../data/hmQuestions";
 
 import { useAuth } from "../context/AuthContext";
-import { markQuestionSolved, updateUserStats } from "../utils/updateStat";
+import { markQuestionSolved, updateUserStats } from "../utils/updateStats";
 
 export default function SolverWithLayout() {
   const navigate = useNavigate();
