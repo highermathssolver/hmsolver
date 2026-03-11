@@ -77,11 +77,18 @@ export default function SolutionPanel({
   }, [currentStep, completed]);
 
   // ================= FINAL SAVE =================
-  const handleFinalSave = async () => {
-    try {
-      if (!user?.uid || !questionId) return;
+const handleFinalSave = async () => {
+  try {
 
-      const qId = Number(questionId);
+    if (!user?.uid || !questionId) return;
+
+    const qId = Number(questionId);
+
+    // ⭐ First mark solved
+    const isNewSolve = await markSolved(user.uid, qId);
+
+    // ⭐ Only update stats if new question
+    if (isNewSolve) {
 
       await updateUserStats({
         userId: user.uid,
@@ -90,14 +97,16 @@ export default function SolutionPanel({
         timeTaken: totalTime,
       });
 
-      await markSolved(user.uid, qId);
-
-      if (onComplete) onComplete();
-
-    } catch (err) {
-      console.error("❌ Final update failed:", err);
     }
-  };
+
+    if (onComplete) onComplete();
+
+  } catch (err) {
+
+    console.error("❌ Final update failed:", err);
+
+  }
+};
 
   // ================= CLICK =================
   const handleClick = (opt) => {
