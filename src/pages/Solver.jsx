@@ -4,7 +4,7 @@ import SolutionPanel from "../components/SolutionPanel";
 import { useAuth } from "../context/AuthContext";
 import { hmQuestions } from "../data/hmQuestions";
 
-import { markSolved } from "../utils/markSolved";
+import { markQuestionSolved } from "../utils/updateStats";
 import { updateUserStats } from "../utils/updateStats";
 
 import { MathJax } from "better-react-mathjax";
@@ -110,7 +110,7 @@ const handleComplete = async () => {
         userId: user.uid,
         isCorrect: true,
         steps: questionData.steps?.length || 1,
-        timeTaken: totalTime || 0,
+        timeTaken: totalTime || 0
       });
 
     }
