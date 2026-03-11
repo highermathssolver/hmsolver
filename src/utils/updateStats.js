@@ -5,6 +5,7 @@ import {
   getDoc,
   setDoc
 } from "firebase/firestore";
+
 import { db } from "../firebase";
 
 /*
@@ -14,22 +15,30 @@ MARK QUESTION AS SOLVED
 */
 export async function markQuestionSolved(userId, questionId) {
   try {
+
     const ref = doc(db, "users", userId);
     const snap = await getDoc(ref);
 
+    // create document if not exist
     if (!snap.exists()) {
       await setDoc(ref, {
         solvedQuestions: [questionId],
         currentQuestionId: questionId,
-        questionsSolved: 1
+        questionsSolved: 1,
+        correctAnswers: 0,
+        totalSteps: 0,
+        totalTime: 0,
+        maxStepTime: 0,
+        streak: 1
       });
+
       return true;
     }
 
     const data = snap.data();
     const solved = data.solvedQuestions || [];
 
-    // prevent duplicates
+    // prevent duplicate solving
     if (solved.includes(questionId)) {
       await updateDoc(ref, {
         currentQuestionId: questionId
@@ -53,6 +62,7 @@ export async function markQuestionSolved(userId, questionId) {
   }
 }
 
+
 /*
 ----------------------------------------
 UPDATE USER STATS
@@ -64,15 +74,29 @@ export const updateUserStats = async ({
   steps,
   timeTaken
 }) => {
+
   try {
+
     const ref = doc(db, "users", userId);
     const snap = await getDoc(ref);
 
-    if (!snap.exists()) return;
+    // create document if not exist
+    if (!snap.exists()) {
+      await setDoc(ref, {
+        questionsSolved: 1,
+        correctAnswers: isCorrect ? 1 : 0,
+        totalSteps: steps || 0,
+        totalTime: timeTaken || 0,
+        maxStepTime: timeTaken || 0,
+        streak: 1,
+        lastSolvedDate: new Date().toISOString().split("T")[0]
+      });
+
+      return;
+    }
 
     const data = snap.data();
 
-    // today's date
     const today = new Date().toISOString().split("T")[0];
 
     let newStreak = data.streak || 0;
@@ -80,6 +104,7 @@ export const updateUserStats = async ({
     if (!data.lastSolvedDate) {
       newStreak = 1;
     } else {
+
       const lastDate = new Date(data.lastSolvedDate);
       const todayDate = new Date(today);
 
@@ -93,11 +118,16 @@ export const updateUserStats = async ({
       }
     }
 
+    const maxTime = Math.max(
+      data.maxStepTime || 0,
+      timeTaken || 0
+    );
+
     await updateDoc(ref, {
       correctAnswers: increment(isCorrect ? 1 : 0),
       totalSteps: increment(steps || 0),
       totalTime: increment(timeTaken || 0),
-      maxStepTime: Math.max(data.maxStepTime || 0, timeTaken || 0),
+      maxStepTime: maxTime,
       streak: newStreak,
       lastSolvedDate: today
     });

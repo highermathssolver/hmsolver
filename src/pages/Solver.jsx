@@ -10,6 +10,7 @@ import { updateUserStats } from "../utils/updateStats";
 import { MathJax } from "better-react-mathjax";
 
 export default function Solver() {
+
   const { user } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -18,17 +19,17 @@ export default function Solver() {
   const scrollRef = useRef(null);
 
   // =========================
-  // 🔥 GET QUESTION
+  // GET QUESTION
   // =========================
   const questionData = useMemo(() => {
     if (!numericId) return null;
-    return hmQuestions.find((q) => q.id === numericId);
+    return hmQuestions.find(q => q.id === numericId);
   }, [numericId]);
 
-  const currentIndex = hmQuestions.findIndex((q) => q.id === numericId);
+  const currentIndex = hmQuestions.findIndex(q => q.id === numericId);
 
   // =========================
-  // 🔥 STATES
+  // STATES
   // =========================
   const [step, setStep] = useState(1);
   const [totalSteps, setTotalSteps] = useState(0);
@@ -37,6 +38,9 @@ export default function Solver() {
   const [progress, setProgress] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
 
+  // =========================
+  // FORMAT TIME
+  // =========================
   const formatTime = (sec) => {
     const m = String(Math.floor(sec / 60)).padStart(2, "0");
     const s = String(sec % 60).padStart(2, "0");
@@ -44,7 +48,7 @@ export default function Solver() {
   };
 
   // =========================
-  // ❌ SAFETY CHECKS
+  // SAFETY CHECKS
   // =========================
   if (!id || isNaN(numericId)) {
     return <div className="text-white p-10">Invalid Question</div>;
@@ -55,7 +59,7 @@ export default function Solver() {
   }
 
   // =========================
-  // 🔥 NAVIGATION
+  // NAVIGATION
   // =========================
   const goNext = () => {
     if (currentIndex < hmQuestions.length - 1) {
@@ -70,40 +74,56 @@ export default function Solver() {
   };
 
   // =========================
-  // 🔥 AUTO NEXT
+  // AUTO NEXT AFTER COMPLETE
   // =========================
   useEffect(() => {
     if (!isCompleted) return;
     if (currentIndex === hmQuestions.length - 1) return;
 
-    const timer = setTimeout(goNext, 2000);
+    const timer = setTimeout(() => {
+      goNext();
+    }, 2000);
+
     return () => clearTimeout(timer);
+
   }, [isCompleted, currentIndex]);
 
   // =========================
-  // 🔥 QUESTION COMPLETE
+  // HANDLE QUESTION COMPLETE
   // =========================
   const handleComplete = async () => {
+
+    if (isCompleted) return;
+
     setIsCompleted(true);
 
     if (!user?.uid) return;
 
     try {
-      await markSolved(user.uid, numericId);
 
-      await updateUserStats({
-        userId: user.uid,
-        isCorrect: true,
-        steps: questionData.steps?.length || 1,
-        timeTaken: totalTime || 0,
-      });
+      // mark question solved
+      const isNewSolve = await markSolved(user.uid, numericId);
+
+      // update stats only if new solve
+      if (isNewSolve) {
+
+        await updateUserStats({
+          userId: user.uid,
+          isCorrect: true,
+          steps: totalSteps || questionData.steps?.length || 1,
+          timeTaken: totalTime || 0
+        });
+
+      }
+
     } catch (err) {
       console.error("Solve tracking error:", err);
     }
+
   };
 
   // =========================
-  // 🎯 UI
+  // UI
   // =========================
   return (
     <div className="w-full">
@@ -115,15 +135,18 @@ export default function Solver() {
           {/* QUESTION */}
           <div className="flex justify-between items-start gap-4">
             <div className="text-lg md:text-2xl font-semibold max-w-[70%] text-white">
+
               <MathJax dynamic>
                 {questionData.question}
               </MathJax>
+
             </div>
           </div>
 
           {/* PROGRESS */}
           <div className="mt-4">
             <div className="flex justify-between text-gray-400 text-sm mb-2">
+
               <span>
                 Step {step} of {totalSteps || questionData.steps?.length || 1}
               </span>
@@ -131,6 +154,7 @@ export default function Solver() {
               <span>
                 ⏱ {formatTime(stepTime)} &nbsp; ⏱ {formatTime(totalTime)}
               </span>
+
             </div>
 
             <div className="w-full h-2 bg-[#222] rounded-full">
@@ -139,6 +163,7 @@ export default function Solver() {
                 style={{ width: `${progress}%` }}
               />
             </div>
+
           </div>
 
         </div>
@@ -146,6 +171,7 @@ export default function Solver() {
 
       {/* CONTENT */}
       <div className="max-w-5xl mx-auto px-6 py-6" ref={scrollRef}>
+
         <SolutionPanel
           user={user}
           questionId={questionData.id}
@@ -158,6 +184,7 @@ export default function Solver() {
           setProgress={setProgress}
           onComplete={handleComplete}
         />
+
       </div>
 
     </div>
