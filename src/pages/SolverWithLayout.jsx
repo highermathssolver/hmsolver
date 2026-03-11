@@ -1,4 +1,4 @@
-
+import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import Solver from "./Solver";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,15 +8,17 @@ import { useAuth } from "../context/AuthContext";
 import { markQuestionSolved, updateUserStats } from "../utils/updateStats";
 
 export default function SolverWithLayout() {
+
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useAuth();
 
-  const numericId = Number(id);
+  const [answeredCorrectly, setAnsweredCorrectly] = useState(false);
 
+  const numericId = Number(id);
   const currentIndex = hmQuestions.findIndex((q) => q.id === numericId);
 
-  // if invalid id
+  // invalid question id
   if (currentIndex === -1) {
     return (
       <Layout>
@@ -29,25 +31,39 @@ export default function SolverWithLayout() {
 
   const currentQuestion = hmQuestions[currentIndex];
 
+  // reset answer state when question changes
+  useEffect(() => {
+    setAnsweredCorrectly(false);
+  }, [currentQuestion]);
+
   const goNext = async () => {
-  if (!user) return;
+    if (!user) return;
 
-  // Only mark solved if user actually answered correctly
-  if (answeredCorrectly) {
-    await markQuestionSolved(user.uid, currentQuestion.id);
+    try {
 
-    await updateUserStats({
-      userId: user.uid,
-      isCorrect: true,
-      steps: currentQuestion.steps?.length || 1,
-      timeTaken: 10
-    });
-  }
+      // update stats only if question solved
+      if (answeredCorrectly) {
 
-  if (currentIndex < hmQuestions.length - 1) {
-    navigate(`/solve/hm/${hmQuestions[currentIndex + 1].id}`);
-  } 
-};
+        await markQuestionSolved(user.uid, currentQuestion.id);
+
+        await updateUserStats({
+          userId: user.uid,
+          isCorrect: true,
+          steps: currentQuestion.steps?.length || 1,
+          timeTaken: 10
+        });
+
+      }
+
+      // navigate to next question
+      if (currentIndex < hmQuestions.length - 1) {
+        navigate(`/solve/hm/${hmQuestions[currentIndex + 1].id}`);
+      }
+
+    } catch (error) {
+      console.error("Next button error:", error);
+    }
+  };
 
   const goPrev = () => {
     if (currentIndex > 0) {
@@ -77,7 +93,10 @@ export default function SolverWithLayout() {
 
   return (
     <Layout headerActions={headerActions}>
-      <Solver question={currentQuestion} />
+      <Solver
+        question={currentQuestion}
+        setAnsweredCorrectly={setAnsweredCorrectly}
+      />
     </Layout>
   );
 }
