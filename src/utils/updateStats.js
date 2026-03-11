@@ -3,7 +3,8 @@ import {
   updateDoc,
   increment,
   getDoc,
-  setDoc
+  setDoc,
+  arrayUnion
 } from "firebase/firestore";
 
 import { db } from "../firebase";
@@ -14,13 +15,15 @@ MARK QUESTION AS SOLVED
 ----------------------------------------
 */
 export async function markQuestionSolved(userId, questionId) {
+
   try {
 
     const ref = doc(db, "users", userId);
     const snap = await getDoc(ref);
 
-    // create document if not exist
+    // Create document if not exist
     if (!snap.exists()) {
+
       await setDoc(ref, {
         solvedQuestions: [questionId],
         currentQuestionId: questionId,
@@ -29,7 +32,8 @@ export async function markQuestionSolved(userId, questionId) {
         totalSteps: 0,
         totalTime: 0,
         maxStepTime: 0,
-        streak: 1
+        streak: 1,
+        lastSolvedDate: new Date().toISOString().split("T")[0]
       });
 
       return true;
@@ -38,18 +42,19 @@ export async function markQuestionSolved(userId, questionId) {
     const data = snap.data();
     const solved = data.solvedQuestions || [];
 
-    // prevent duplicate solving
+    // Prevent duplicate solving
     if (solved.includes(questionId)) {
+
       await updateDoc(ref, {
         currentQuestionId: questionId
       });
+
       return false;
     }
 
-    const updatedSolved = [...solved, questionId];
-
+    // Safe Firestore update
     await updateDoc(ref, {
-      solvedQuestions: updatedSolved,
+      solvedQuestions: arrayUnion(questionId),
       currentQuestionId: questionId,
       questionsSolved: increment(1)
     });
@@ -57,9 +62,12 @@ export async function markQuestionSolved(userId, questionId) {
     return true;
 
   } catch (err) {
+
     console.error("markQuestionSolved error:", err);
     return false;
+
   }
+
 }
 
 
@@ -80,8 +88,11 @@ export const updateUserStats = async ({
     const ref = doc(db, "users", userId);
     const snap = await getDoc(ref);
 
-    // create document if not exist
+    const today = new Date().toISOString().split("T")[0];
+
+    // Create document if missing
     if (!snap.exists()) {
+
       await setDoc(ref, {
         questionsSolved: 1,
         correctAnswers: isCorrect ? 1 : 0,
@@ -89,7 +100,7 @@ export const updateUserStats = async ({
         totalTime: timeTaken || 0,
         maxStepTime: timeTaken || 0,
         streak: 1,
-        lastSolvedDate: new Date().toISOString().split("T")[0]
+        lastSolvedDate: today
       });
 
       return;
@@ -97,12 +108,18 @@ export const updateUserStats = async ({
 
     const data = snap.data();
 
-    const today = new Date().toISOString().split("T")[0];
+    /*
+    -----------------------
+    STREAK CALCULATION
+    -----------------------
+    */
 
     let newStreak = data.streak || 0;
 
     if (!data.lastSolvedDate) {
+
       newStreak = 1;
+
     } else {
 
       const lastDate = new Date(data.lastSolvedDate);
@@ -118,10 +135,22 @@ export const updateUserStats = async ({
       }
     }
 
+    /*
+    -----------------------
+    MAX STEP TIME
+    -----------------------
+    */
+
     const maxTime = Math.max(
       data.maxStepTime || 0,
       timeTaken || 0
     );
+
+    /*
+    -----------------------
+    UPDATE STATS
+    -----------------------
+    */
 
     await updateDoc(ref, {
       correctAnswers: increment(isCorrect ? 1 : 0),
@@ -133,6 +162,9 @@ export const updateUserStats = async ({
     });
 
   } catch (err) {
+
     console.error("Stats update error:", err);
+
   }
+
 };
