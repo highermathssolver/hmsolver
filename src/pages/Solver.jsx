@@ -91,36 +91,37 @@ export default function Solver() {
   // =========================
   // HANDLE QUESTION COMPLETE
   // =========================
-  const handleComplete = async () => {
+const handleComplete = async () => {
 
-    if (isCompleted) return;
+  setIsCompleted(true);
 
-    setIsCompleted(true);
+  if (!user?.uid) return;
 
-    if (!user?.uid) return;
+  try {
 
-    try {
+    const isNewSolve = await markQuestionSolved(
+      user.uid,
+      numericId
+    );
 
-      // mark question solved
-      const isNewSolve = await markSolved(user.uid, numericId);
+    if (isNewSolve) {
 
-      // update stats only if new solve
-      if (isNewSolve) {
+      await updateUserStats({
+        userId: user.uid,
+        isCorrect: true,
+        steps: questionData.steps?.length || 1,
+        timeTaken: totalTime || 0,
+      });
 
-        await updateUserStats({
-          userId: user.uid,
-          isCorrect: true,
-          steps: totalSteps || questionData.steps?.length || 1,
-          timeTaken: totalTime || 0
-        });
-
-      }
-
-    } catch (err) {
-      console.error("Solve tracking error:", err);
     }
 
-  };
+  } catch (err) {
+
+    console.error("Solve tracking error:", err);
+
+  }
+
+};
 
   // =========================
   // UI
