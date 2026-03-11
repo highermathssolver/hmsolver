@@ -30,23 +30,24 @@ export default function SolverWithLayout() {
   const currentQuestion = hmQuestions[currentIndex];
 
   const goNext = async () => {
-    if (!user) return;
+  if (!user) return;
 
-    // mark question solved
+  // Only mark solved if user actually answered correctly
+  if (answeredCorrectly) {
     await markQuestionSolved(user.uid, currentQuestion.id);
 
-    // update stats
     await updateUserStats({
       userId: user.uid,
-      isCorrect: true, // you can change based on answer logic
+      isCorrect: true,
       steps: currentQuestion.steps?.length || 1,
-      timeTaken: 10 // replace with real timer later
+      timeTaken: 10
     });
+  }
 
-    if (currentIndex < hmQuestions.length - 1) {
-      navigate(`/solve/hm/${hmQuestions[currentIndex + 1].id}`);
-    }
-  };
+  if (currentIndex < hmQuestions.length - 1) {
+    navigate(`/solve/hm/${hmQuestions[currentIndex + 1].id}`);
+  } 
+};
 
   const goPrev = () => {
     if (currentIndex > 0) {
