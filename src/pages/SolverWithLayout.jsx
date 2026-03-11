@@ -1,16 +1,48 @@
+
 import Layout from "../components/Layout";
 import Solver from "./Solver";
 import { useNavigate, useParams } from "react-router-dom";
 import { hmQuestions } from "../data/hmQuestions";
 
+import { useAuth } from "../context/AuthContext";
+import { markQuestionSolved, updateUserStats } from "../utils/updateStat";
+
 export default function SolverWithLayout() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { user } = useAuth();
 
   const numericId = Number(id);
-  const currentIndex = hmQuestions.findIndex(q => q.id === numericId);
 
-  const goNext = () => {
+  const currentIndex = hmQuestions.findIndex((q) => q.id === numericId);
+
+  // if invalid id
+  if (currentIndex === -1) {
+    return (
+      <Layout>
+        <div className="text-white text-center mt-10">
+          ❌ Question not found
+        </div>
+      </Layout>
+    );
+  }
+
+  const currentQuestion = hmQuestions[currentIndex];
+
+  const goNext = async () => {
+    if (!user) return;
+
+    // mark question solved
+    await markQuestionSolved(user.uid, currentQuestion.id);
+
+    // update stats
+    await updateUserStats({
+      userId: user.uid,
+      isCorrect: true, // you can change based on answer logic
+      steps: currentQuestion.steps?.length || 1,
+      timeTaken: 10 // replace with real timer later
+    });
+
     if (currentIndex < hmQuestions.length - 1) {
       navigate(`/solve/hm/${hmQuestions[currentIndex + 1].id}`);
     }
@@ -44,7 +76,7 @@ export default function SolverWithLayout() {
 
   return (
     <Layout headerActions={headerActions}>
-      <Solver />
+      <Solver question={currentQuestion} />
     </Layout>
   );
 }

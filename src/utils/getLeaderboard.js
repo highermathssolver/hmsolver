@@ -3,21 +3,31 @@ import { db } from "../firebase";
 
 export const getLeaderboard = async () => {
   try {
-    const q = query(
+    const leaderboardQuery = query(
       collection(db, "users"),
       orderBy("questionsSolved", "desc"),
       limit(10)
     );
 
-    const snap = await getDocs(q);
+    const snapshot = await getDocs(leaderboardQuery);
 
-    return snap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const leaderboard = snapshot.docs.map((docSnap) => {
+      const data = docSnap.data();
 
-  } catch (err) {
-    console.error(err);
+      return {
+        id: docSnap.id,
+        name: data.name || "Anonymous",
+        photoURL: data.photoURL || null,
+        questionsSolved:
+          data.questionsSolved ||
+          (data.solvedQuestions ? data.solvedQuestions.length : 0),
+      };
+    });
+
+    return leaderboard;
+
+  } catch (error) {
+    console.error("❌ Leaderboard fetch error:", error);
     return [];
   }
 };

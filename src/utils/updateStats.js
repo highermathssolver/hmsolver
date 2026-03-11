@@ -1,37 +1,68 @@
-import { doc, updateDoc, increment, getDoc } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  increment,
+  getDoc,
+  setDoc
+} from "firebase/firestore";
 import { db } from "../firebase";
 
-
+/*
+----------------------------------------
+MARK QUESTION AS SOLVED
+----------------------------------------
+*/
 export async function markQuestionSolved(userId, questionId) {
-  const ref = doc(db, "users", userId);
+  try {
+    const ref = doc(db, "users", userId);
+    const snap = await getDoc(ref);
 
-  const snap = await getDoc(ref);
+    if (!snap.exists()) {
+      await setDoc(ref, {
+        solvedQuestions: [questionId],
+        currentQuestionId: questionId,
+        questionsSolved: 1
+      });
+      return true;
+    }
 
-  if (!snap.exists()) {
-    await setDoc(ref, {
-      solvedQuestions: [questionId],
-      currentQuestionId: questionId
+    const data = snap.data();
+    const solved = data.solvedQuestions || [];
+
+    // prevent duplicates
+    if (solved.includes(questionId)) {
+      await updateDoc(ref, {
+        currentQuestionId: questionId
+      });
+      return false;
+    }
+
+    const updatedSolved = [...solved, questionId];
+
+    await updateDoc(ref, {
+      solvedQuestions: updatedSolved,
+      currentQuestionId: questionId,
+      questionsSolved: increment(1)
     });
-    return;
+
+    return true;
+
+  } catch (err) {
+    console.error("markQuestionSolved error:", err);
+    return false;
   }
-
-  const data = snap.data();
-
-  const updatedSolved = Array.from(
-    new Set([...(data.solvedQuestions || []), questionId])
-  );
-
-  await updateDoc(ref, {
-    solvedQuestions: updatedSolved,
-    currentQuestionId: questionId
-  });
 }
 
+/*
+----------------------------------------
+UPDATE USER STATS
+----------------------------------------
+*/
 export const updateUserStats = async ({
   userId,
   isCorrect,
   steps,
-  timeTaken,
+  timeTaken
 }) => {
   try {
     const ref = doc(db, "users", userId);
@@ -41,7 +72,7 @@ export const updateUserStats = async ({
 
     const data = snap.data();
 
-    // 📅 TODAY DATE
+    // today's date
     const today = new Date().toISOString().split("T")[0];
 
     let newStreak = data.streak || 0;
@@ -50,24 +81,25 @@ export const updateUserStats = async ({
       newStreak = 1;
     } else {
       const lastDate = new Date(data.lastSolvedDate);
+      const todayDate = new Date(today);
+
       const diffDays =
-        (new Date(today) - lastDate) / (1000 * 60 * 60 * 24);
+        (todayDate - lastDate) / (1000 * 60 * 60 * 24);
 
       if (diffDays === 1) {
-        newStreak += 1; // 🔥 continue streak
+        newStreak += 1;
       } else if (diffDays > 1) {
-        newStreak = 1; // 🔥 reset
+        newStreak = 1;
       }
     }
 
     await updateDoc(ref, {
-      questionsSolved: increment(1),
       correctAnswers: increment(isCorrect ? 1 : 0),
-      totalSteps: increment(steps),
-      totalTime: increment(timeTaken),
-      maxStepTime: Math.max(data.maxStepTime || 0, timeTaken),
+      totalSteps: increment(steps || 0),
+      totalTime: increment(timeTaken || 0),
+      maxStepTime: Math.max(data.maxStepTime || 0, timeTaken || 0),
       streak: newStreak,
-      lastSolvedDate: today,
+      lastSolvedDate: today
     });
 
   } catch (err) {
