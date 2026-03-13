@@ -380,7 +380,7 @@ export const hmQuestions = [
       ]
     },
     {
-      question: "For the quadratic equation \\(5t^2 - 8t + 3 = 0\\) what is the value of t1 plus t2 where t1 and t2 are the roots",
+      question: "For the quadratic equation \\(5t^2 - 8t + 3 = 0\\) what is the value of \\(t_1 + t_2\\) where \\(t_1\\) and \\(t_2\\) are the roots",
       correct: "\\(\\frac{8}{5}\\)",
       options: [
         "\\(-\\frac{8}{5}\\)",
@@ -390,7 +390,7 @@ export const hmQuestions = [
       ]
     },
     {
-      question: "If t equals ln x then t1 plus t2 equals ln x1 plus ln x2 which becomes",
+      question: "If t = ln x then (t1 + t2) = (ln x1 + ln x2) which becomes",
       correct: "\\(\\ln(x_1 x_2) = \\frac{8}{5}\\)",
       options: [
         "\\(\\ln(x_1 x_2) = \\frac{8}{5}\\)",
