@@ -226,6 +226,92 @@ export const hmQuestions = [
       }
     ]
   },
+{
+  id: 4,
+  question: "Given the differential equation \\( \\frac{dx}{dy} + \\frac{1}{y^2}x = \\frac{1}{y^3} \\) with the initial condition \\(x=1\\) when \\(y=1\\), find the value of \\(x\\) when \\(y=\\frac{1}{2}\\).",
 
+  steps: [
+    {
+      question: "What is the integrating factor for this linear differential equation?",
+      correct: "\\(e^{-\\frac{1}{y}}\\)",
+      options: [
+        "\\(e^{-\\frac{1}{y}}\\)",
+        "\\(e^{\\frac{1}{y}}\\)",
+        "\\(e^{-\\frac{1}{2y^2}}\\)",
+        "\\(y\\)"
+      ]
+    },
+    {
+      question: "Multiply the differential equation by the integrating factor. The left side becomes which derivative?",
+      correct: "\\(\\frac{d}{dy}(x e^{-1/y})\\)",
+      options: [
+        "\\(\\frac{d}{dy}(x e^{-1/y})\\)",
+        "\\(\\frac{d}{dy}(x e^{1/y})\\)",
+        "\\(\\frac{d}{dy}(x e^{-y})\\)",
+        "\\(\\frac{d}{dy}(x/y)\\)"
+      ]
+    },
+    {
+      question: "After multiplying by the integrating factor, which integral equation is obtained?",
+      correct: "\\(x e^{-1/y} = \\int e^{-1/y}\\frac{1}{y^3} dy\\)",
+      options: [
+        "\\(x e^{-1/y} = \\int e^{-1/y}\\frac{1}{y^3} dy\\)",
+        "\\(x e^{-1/y} = \\int e^{-1/y}\\frac{1}{y^2} dy\\)",
+        "\\(x e^{-1/y} = \\int \\frac{1}{y^3} dy\\)",
+        "\\(x e^{-1/y} = \\int e^{-1/y} dy\\)"
+      ]
+    },
+    {
+      question: "To evaluate \\(\\int e^{-1/y}\\frac{1}{y^3} dy\\), use substitution \\(t=-\\frac{1}{y}\\). Which integral form is obtained?",
+      correct: "\\(-\\int t e^t dt\\)",
+      options: [
+        "\\(\\int t e^t dt\\)",
+        "\\(-\\int t e^t dt\\)",
+        "\\(\\int e^t dt\\)",
+        "\\(\\int \\frac{e^t}{t} dt\\)"
+      ]
+    },
+    {
+      question: "Evaluate \\(-\\int t e^t dt\\).",
+      correct: "\\(-t e^t + e^t + C\\)",
+      options: [
+        "\\(-t e^t + e^t + C\\)",
+        "\\(-t e^t - e^t + C\\)",
+        "\\(t e^t - e^t + C\\)",
+        "\\(t e^t + e^t + C\\)"
+      ]
+    },
+    {
+      question: "Substitute back \\(t=-\\frac{1}{y}\\). What expression is obtained for \\(x e^{-1/y}\\)?",
+      correct: "\\(x e^{-1/y} = \\frac{1}{y}e^{-1/y} + e^{-1/y} + C\\)",
+      options: [
+        "\\(x e^{-1/y} = \\frac{1}{y}e^{-1/y} + e^{-1/y} + C\\)",
+        "\\(x e^{-1/y} = -\\frac{1}{y}e^{-1/y} + e^{-1/y} + C\\)",
+        "\\(x e^{-1/y} = \\frac{1}{y}e^{-1/y} - e^{-1/y} + C\\)",
+        "\\(x e^{-1/y} = \\frac{1}{y} + e^{-1/y} + C\\)"
+      ]
+    },
+    {
+      question: "Use the initial condition \\(x=1\\) when \\(y=1\\). What is the value of \\(C\\)?",
+      correct: "\\(-\\frac{1}{e}\\)",
+      options: [
+        "\\(-\\frac{1}{e}\\)",
+        "\\(\\frac{1}{e}\\)",
+        "\\(-1\\)",
+        "\\(0\\)"
+      ]
+    },
+    {
+      question: "Using the value of \\(C\\), find \\(x\\) when \\(y=\\frac{1}{2}\\).",
+      correct: "\\(3 - e\\)",
+      options: [
+        "\\(3 - e\\)",
+        "\\(3 + e\\)",
+        "\\(e - 3\\)",
+        "\\(\\frac{3}{e^2} - \\frac{1}{e}\\)"
+      ]
+    }
+  ]
+}
 
 ];
