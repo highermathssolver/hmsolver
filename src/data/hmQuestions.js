@@ -587,6 +587,123 @@ export const hmQuestions = [
       ]
     }
   ]
+},
+{
+  id: 8,
+  question: "Let \\(a_1, a_2, a_3, \\ldots\\) be a G P of increasing positive terms If \\(a_1 a_5 = 28\\) and \\(a_2 + a_4 = 29\\) then \\(a_6\\) is equal to",
+
+  steps: [
+    {
+      question: "In a geometric progression if first term is a and common ratio is r what is \\(a_5\\)",
+      correct: "\\(ar^4\\)",
+      options: [
+        "\\(ar^4\\)",
+        "\\(ar^5\\)",
+        "\\(a^5 r\\)",
+        "\\(a + 4r\\)"
+      ]
+    },
+    {
+      question: "Using \\(a_1 a_5 = 28\\) substitute \\(a_1 = a\\) and \\(a_5 = ar^4\\) What equation is obtained",
+      correct: "\\(a^2 r^4 = 28\\)",
+      options: [
+        "\\(a^2 r^4 = 28\\)",
+        "\\(ar^4 = 28\\)",
+        "\\(a^2 r^5 = 28\\)",
+        "\\(a r^2 = 28\\)"
+      ]
+    },
+    {
+      question: "In the same G P what are \\(a_2\\) and \\(a_4\\)",
+      correct: "\\(ar\\) and \\(ar^3\\)",
+      options: [
+        "\\(ar\\) and \\(ar^3\\)",
+        "\\(ar^2\\) and \\(ar^4\\)",
+        "\\(a + r\\) and \\(a + r^3\\)",
+        "\\(a\\) and \\(ar^3\\)"
+      ]
+    },
+    {
+      question: "Using \\(a_2 + a_4 = 29\\) substitute \\(ar\\) and \\(ar^3\\) What equation is obtained",
+      correct: "\\(ar + ar^3 = 29\\)",
+      options: [
+        "\\(ar + ar^3 = 29\\)",
+        "\\(ar^2 + ar^4 = 29\\)",
+        "\\(a + ar^3 = 29\\)",
+        "\\(ar + ar^4 = 29\\)"
+      ]
+    },
+    {
+      question: "Factor the expression \\(ar + ar^3\\)",
+      correct: "\\(ar(1 + r^2) = 29\\)",
+      options: [
+        "\\(ar(1 + r^2) = 29\\)",
+        "\\(a(1 + r^3) = 29\\)",
+        "\\(ar^2(1 + r) = 29\\)",
+        "\\(ar(1 + r^3) = 29\\)"
+      ]
+    },
+    {
+      question: "Square both sides of \\(ar(1 + r^2) = 29\\) What equation is obtained",
+      correct: "\\(a^2 r^2 (1 + r^2)^2 = 29^2\\)",
+      options: [
+        "\\(a^2 r^2 (1 + r^2)^2 = 29^2\\)",
+        "\\(a^2 r^4 (1 + r^2) = 29^2\\)",
+        "\\(a^2 r^2 (1 + r) = 29^2\\)",
+        "\\(ar(1 + r^2)^2 = 29^2\\)"
+      ]
+    },
+    {
+      question: "To eliminate a, divide the above obtained equations by \\(a^2 r^4 = 28\\) we get",
+      correct: "\\(\\frac{r^2}{(1 + r^2)^2} = \\frac{28}{29^2}\\)",
+      options: [
+        "\\(\\frac{r^2}{(1 + r^2)^2} = \\frac{28}{29^2}\\)",
+        "\\(\\frac{r^4}{(1 + r^2)^2} = \\frac{28}{29}\\)",
+        "\\(\\frac{r}{1 + r^2} = \\frac{28}{29}\\)",
+        "\\(\\frac{1}{(1 + r^2)^2} = \\frac{28}{29^2}\\)"
+      ]
+    },
+    {
+      question: "Taking square root what relation is obtained",
+      correct: "\\(\\frac{r}{1 + r^2} = \\frac{\\sqrt{28}}{29}\\)",
+      options: [
+        "\\(\\frac{r}{1 + r^2} = \\frac{\\sqrt{28}}{29}\\)",
+        "\\(\\frac{r^2}{1 + r^2} = \\frac{\\sqrt{28}}{29}\\)",
+        "\\(\\frac{r}{1 + r} = \\frac{\\sqrt{28}}{29}\\)",
+        "\\(\\frac{r}{1 + r^2} = \\frac{28}{29}\\)"
+      ]
+    },
+    {
+      question: "Solve the relation to find r",
+      correct: "\\(r = \\sqrt{28}\\)",
+      options: [
+        "\\(r = \\sqrt{28}\\)",
+        "\\(r = 28\\)",
+        "\\(r = \\frac{1}{\\sqrt{28}}\\)",
+        "\\(r = 14\\)"
+      ]
+    },
+    {
+      question: "Substitute \\(r = \\sqrt{28}\\) in \\(a^2 r^4 = 28\\) What is a",
+      correct: "\\(a = \\frac{1}{\\sqrt{28}}\\)",
+      options: [
+        "\\(a = \\frac{1}{\\sqrt{28}}\\)",
+        "\\(a = \\sqrt{28}\\)",
+        "\\(a = \\frac{1}{28}\\)",
+        "\\(a = 28\\)"
+      ]
+    },
+    {
+      question: "Using \\(a_6 = ar^5\\) compute \\(a_6\\)",
+      correct: "\\(784\\)",
+      options: [
+        "\\(628\\)",
+        "\\(526\\)",
+        "\\(784\\)",
+        "\\(812\\)"
+      ]
+    }
+  ]
 }
 
 
