@@ -325,6 +325,105 @@ export const hmQuestions = [
 },
 
 {
+  id: 7,
+  question: "The product of all solutions of the equation \\(e^{5(\\ln x)^2+3}=x^8\\) with \\(x>0\\) is",
+
+  steps: [
+    {
+      question: "To simplify the equation \\(e^{5(\\ln x)^2+3}=x^8\\) which operation should be applied first",
+      correct: "Take natural logarithm on both sides",
+      options: [
+        "Differentiate both sides",
+        "Take natural logarithm on both sides",
+        "Multiply both sides by ln x",
+        "Expand the exponent directly"
+      ]
+    },
+    {
+      question: "After taking natural logarithm on both sides of \\(e^{5(\\ln x)^2+3}=x^8\\) what equation do we obtain",
+      correct: "\\(\\ln(e^{5(\\ln x)^2+3}) = \\ln(x^8)\\)",
+      options: [
+        "\\(\\ln(e^{5(\\ln x)^2+3}) = \\ln(x^8)\\)",
+        "\\(e^{\\ln(5(\\ln x)^2+3)} = 8\\ln x\\)",
+        "\\(\\ln(e^{5(\\ln x)^2}) = x^8\\)",
+        "\\(\\ln(e^{5(\\ln x)^2}) = 8x\\)"
+      ]
+    },
+    {
+      question: "Using the property \\(\\ln(e^a)=a\\) and \\(\\ln(x^n)=n\\ln x\\) simplify the equation",
+      correct: "\\(5(\\ln x)^2 + 3 = 8\\ln x\\)",
+      options: [
+        "\\(5(\\ln x)^2 + 3 = 8\\ln x\\)",
+        "\\(5(\\ln x)^2 + 3 = x^8\\)",
+        "\\(5(\\ln x)^2 + 3 = \\ln(8x)\\)",
+        "\\(5(\\ln x)^2 = 8x + 3\\)"
+      ]
+    },
+    {
+      question: "To convert the equation into quadratic form which substitution is useful",
+      correct: "Let ln x = t",
+      options: [
+        "Let x = t",
+        "Let ln x = t",
+        "Let x squared = t",
+        "Let e power x = t"
+      ]
+    },
+    {
+      question: "After substituting t = ln x what equation is obtained",
+      correct: "\\(5t^2 - 8t + 3 = 0\\)",
+      options: [
+        "\\(5t^2 - 8t + 3 = 0\\)",
+        "\\(5t^2 + 8t + 3 = 0\\)",
+        "\\(5t^2 - 8t - 3 = 0\\)",
+        "\\(t^2 - 8t + 5 = 0\\)"
+      ]
+    },
+    {
+      question: "For the quadratic equation \\(5t^2 - 8t + 3 = 0\\) what is the value of t1 plus t2 where t1 and t2 are the roots",
+      correct: "\\(\\frac{8}{5}\\)",
+      options: [
+        "\\(-\\frac{8}{5}\\)",
+        "\\(\\frac{8}{5}\\)",
+        "\\(\\frac{3}{5}\\)",
+        "\\(\\frac{5}{8}\\)"
+      ]
+    },
+    {
+      question: "If t equals ln x then t1 plus t2 equals ln x1 plus ln x2 which becomes",
+      correct: "\\(\\ln(x_1 x_2) = \\frac{8}{5}\\)",
+      options: [
+        "\\(\\ln(x_1 x_2) = \\frac{8}{5}\\)",
+        "\\(\\ln(x_1 + x_2) = \\frac{8}{5}\\)",
+        "\\(x_1 x_2 = \\frac{8}{5}\\)",
+        "\\(\\ln(x_1 x_2) = \\frac{5}{8}\\)"
+      ]
+    },
+    {
+      question: "If \\(\\ln(x_1 x_2) = \\frac{8}{5}\\) what is the value of \\(x_1 x_2\\)",
+      correct: "\\(e^{\\frac{8}{5}}\\)",
+      options: [
+        "\\(e^{\\frac{5}{8}}\\)",
+        "\\(e^{\\frac{8}{5}}\\)",
+        "\\(\\frac{8}{5}\\)",
+        "\\(e^8\\)"
+      ]
+    },
+    {
+      question: "What is the product of all solutions",
+      correct: "\\(e^{\\frac{8}{5}}\\)",
+      options: [
+        "\\(e^{\\frac{6}{5}}\\)",
+        "\\(e^{\\frac{8}{5}}\\)",
+        "\\(e^2\\)",
+        "\\(e\\)"
+      ]
+    }
+  ]
+},
+
+
+{
   id: 6,
   question: "The number of non-empty equivalence relations on the set \\(\\{1,2,3\\}\\) is:",
 
