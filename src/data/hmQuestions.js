@@ -228,71 +228,81 @@ export const hmQuestions = [
   },
 {
   id: 4,
-  question: "Given the differential equation \\( \\frac{dx}{dy} + \\frac{1}{y^2}x = \\frac{1}{y^3} \\) with the initial condition \\(x=1\\) when \\(y=1\\), find the value of \\(x\\) when \\(y=\\frac{1}{2}\\).",
+  question: "Given the differential equation \\(\\frac{dx}{dy} + \\frac{1}{y^2}x = \\frac{1}{y^3}\\) with the initial condition \\(x=1\\) when \\(y=1\\), find the value of \\(x\\) when \\(y=\\frac{1}{2}\\).",
 
   steps: [
     {
-      question: "What is the integrating factor for this linear differential equation?",
+      question: "Identify the integrating factor (I.F.) of the differential equation \\(\\frac{dx}{dy}+\\frac{1}{y^2}x=\\frac{1}{y^3}\\).",
       correct: "\\(e^{-\\frac{1}{y}}\\)",
       options: [
         "\\(e^{-\\frac{1}{y}}\\)",
         "\\(e^{\\frac{1}{y}}\\)",
-        "\\(e^{-\\frac{1}{2y^2}}\\)",
-        "\\(y\\)"
+        "\\(y\\)",
+        "\\(e^{-\\frac{1}{2y^2}}\\)"
       ]
     },
     {
-      question: "Multiply the differential equation by the integrating factor. The left side becomes which derivative?",
+      question: "Multiply the differential equation by the integrating factor \\(e^{-1/y}\\). What equation is obtained?",
+      correct: "\\(e^{-1/y}\\frac{dx}{dy}+\\frac{1}{y^2}xe^{-1/y}=\\frac{e^{-1/y}}{y^3}\\)",
+      options: [
+        "\\(e^{-1/y}\\frac{dx}{dy}+\\frac{1}{y^2}xe^{-1/y}=\\frac{e^{-1/y}}{y^3}\\)",
+        "\\(e^{-1/y}\\frac{dx}{dy}+\\frac{1}{y}xe^{-1/y}=\\frac{e^{-1/y}}{y^3}\\)",
+        "\\(e^{-1/y}\\frac{dx}{dy}+xe^{-1/y}=\\frac{e^{-1/y}}{y^3}\\)",
+        "\\(e^{-1/y}\\frac{dx}{dy}+\\frac{1}{y^2}xe^{-1/y}=\\frac{1}{y^3}\\)"
+      ]
+    },
+    {
+      question: "Recognize the left side as a derivative. Which derivative is obtained?",
       correct: "\\(\\frac{d}{dy}(x e^{-1/y})\\)",
       options: [
         "\\(\\frac{d}{dy}(x e^{-1/y})\\)",
         "\\(\\frac{d}{dy}(x e^{1/y})\\)",
-        "\\(\\frac{d}{dy}(x e^{-y})\\)",
-        "\\(\\frac{d}{dy}(x/y)\\)"
+        "\\(\\frac{d}{dy}(x/y)\\)",
+        "\\(\\frac{d}{dy}(xe^{-y})\\)"
       ]
     },
     {
-      question: "After multiplying by the integrating factor, which integral equation is obtained?",
-      correct: "\\(x e^{-1/y} = \\int e^{-1/y}\\frac{1}{y^3} dy\\)",
+      question: "Integrate both sides. What equation is obtained?",
+      correct: "\\(x e^{-1/y}=\\int e^{-1/y}\\frac{1}{y^3}dy\\)",
       options: [
-        "\\(x e^{-1/y} = \\int e^{-1/y}\\frac{1}{y^3} dy\\)",
-        "\\(x e^{-1/y} = \\int e^{-1/y}\\frac{1}{y^2} dy\\)",
-        "\\(x e^{-1/y} = \\int \\frac{1}{y^3} dy\\)",
-        "\\(x e^{-1/y} = \\int e^{-1/y} dy\\)"
+        "\\(x e^{-1/y}=\\int e^{-1/y}\\frac{1}{y^3}dy\\)",
+        "\\(x e^{-1/y}=\\int e^{-1/y}\\frac{1}{y^2}dy\\)",
+        "\\(x e^{-1/y}=\\int \\frac{1}{y^3}dy\\)",
+        "\\(x e^{-1/y}=\\int e^{-1/y}dy\\)"
       ]
     },
     {
-      question: "To evaluate \\(\\int e^{-1/y}\\frac{1}{y^3} dy\\), use substitution \\(t=-\\frac{1}{y}\\). Which integral form is obtained?",
-      correct: "\\(-\\int t e^t dt\\)",
+      question: "Use substitution \\(t=-\\frac{1}{y}\\). What is \\(dt\\)?",
+      correct: "\\(dt=\\frac{1}{y^2}dy\\)",
       options: [
-        "\\(\\int t e^t dt\\)",
-        "\\(-\\int t e^t dt\\)",
-        "\\(\\int e^t dt\\)",
-        "\\(\\int \\frac{e^t}{t} dt\\)"
+        "\\(dt=\\frac{1}{y^2}dy\\)",
+        "\\(dt=-\\frac{1}{y^2}dy\\)",
+        "\\(dt=\\frac{1}{y}dy\\)",
+        "\\(dt=-\\frac{1}{y}dy\\)"
       ]
     },
     {
-      question: "Evaluate \\(-\\int t e^t dt\\).",
-      correct: "\\(-t e^t + e^t + C\\)",
+      question: "After substitution, the integral becomes",
+      correct: "\\(-\\int t e^{t}dt\\)",
       options: [
-        "\\(-t e^t + e^t + C\\)",
-        "\\(-t e^t - e^t + C\\)",
-        "\\(t e^t - e^t + C\\)",
-        "\\(t e^t + e^t + C\\)"
+        "\\(-\\int t e^{t}dt\\)",
+        "\\(\\int t e^{t}dt\\)",
+        "\\(\\int e^{t}dt\\)",
+        "\\(-\\int e^{t}dt\\)"
       ]
     },
     {
-      question: "Substitute back \\(t=-\\frac{1}{y}\\). What expression is obtained for \\(x e^{-1/y}\\)?",
-      correct: "\\(x e^{-1/y} = \\frac{1}{y}e^{-1/y} + e^{-1/y} + C\\)",
+      question: "Evaluate \\(-\\int t e^{t}dt\\).",
+      correct: "\\(-t e^{t}+e^{t}+C\\)",
       options: [
-        "\\(x e^{-1/y} = \\frac{1}{y}e^{-1/y} + e^{-1/y} + C\\)",
-        "\\(x e^{-1/y} = -\\frac{1}{y}e^{-1/y} + e^{-1/y} + C\\)",
-        "\\(x e^{-1/y} = \\frac{1}{y}e^{-1/y} - e^{-1/y} + C\\)",
-        "\\(x e^{-1/y} = \\frac{1}{y} + e^{-1/y} + C\\)"
+        "\\(-t e^{t}+e^{t}+C\\)",
+        "\\(-t e^{t}-e^{t}+C\\)",
+        "\\(t e^{t}+e^{t}+C\\)",
+        "\\(t e^{t}-e^{t}+C\\)"
       ]
     },
     {
-      question: "Use the initial condition \\(x=1\\) when \\(y=1\\). What is the value of \\(C\\)?",
+      question: "Apply the condition \\(x=1, y=1\\). What is the value of \\(C\\)?",
       correct: "\\(-\\frac{1}{e}\\)",
       options: [
         "\\(-\\frac{1}{e}\\)",
@@ -302,16 +312,183 @@ export const hmQuestions = [
       ]
     },
     {
-      question: "Using the value of \\(C\\), find \\(x\\) when \\(y=\\frac{1}{2}\\).",
-      correct: "\\(3 - e\\)",
+      question: "Substitute \\(y=\\frac{1}{2}\\). What is the value of \\(x\\)?",
+      correct: "\\(3-e\\)",
       options: [
-        "\\(3 - e\\)",
-        "\\(3 + e\\)",
-        "\\(e - 3\\)",
-        "\\(\\frac{3}{e^2} - \\frac{1}{e}\\)"
+        "\\(3-e\\)",
+        "\\(3+e\\)",
+        "\\(e-3\\)",
+        "\\(\\frac{3}{e^2}-\\frac{1}{e}\\)"
+      ]
+    }
+  ]
+},
+
+{
+  id: 6,
+  question: "The number of non-empty equivalence relations on the set \\(\\{1,2,3\\}\\) is:",
+
+  steps: [
+    {
+      question: "What property must every equivalence relation on a set satisfy?",
+      correct: "Reflexive, symmetric, and transitive",
+      options: [
+        "Reflexive, symmetric, and transitive",
+        "Only reflexive",
+        "Only symmetric and transitive",
+        "Reflexive and antisymmetric"
+      ]
+    },
+    {
+      question: "For the set \\(\\{1,2,3\\}\\), which set of ordered pairs must be present due to the reflexive property?",
+      correct: "\\(A = \\{(1,1),(2,2),(3,3)\\}\\)",
+      options: [
+        "\\(A = \\{(1,1),(2,2),(3,3)\\}\\)",
+        "\\(A = \\{(1,2),(2,3),(3,1)\\}\\)",
+        "\\(A = \\{(1,1),(2,2)\\}\\)",
+        "\\(A = \\{(1,2),(2,1)\\}\\)"
+      ]
+    },
+    {
+      question: "If \\(R=A\\), what is the number of ordered pairs in the relation?",
+      correct: "\\(|R|=3\\)",
+      options: [
+        "\\(|R|=3\\)",
+        "\\(|R|=2\\)",
+        "\\(|R|=5\\)",
+        "\\(|R|=9\\)"
+      ]
+    },
+    {
+      question: "If elements \\(1\\) and \\(2\\) are equivalent, which additional pairs must be included due to symmetry?",
+      correct: "\\((1,2),(2,1)\\)",
+      options: [
+        "\\((1,2),(2,1)\\)",
+        "\\((1,2),(1,3)\\)",
+        "\\((2,3),(3,2)\\)",
+        "\\((1,3),(3,1)\\)"
+      ]
+    },
+    {
+      question: "In this case, what is the size of the relation \\(R = A \\cup \\{(1,2),(2,1)\\}\\)?",
+      correct: "\\(|R|=5\\)",
+      options: [
+        "\\(|R|=5\\)",
+        "\\(|R|=4\\)",
+        "\\(|R|=6\\)",
+        "\\(|R|=7\\)"
+      ]
+    },
+    {
+      question: "If all elements \\(1,2,3\\) are equivalent, what is the resulting relation?",
+      correct: "\\(R = \\{1,2,3\\} \\times \\{1,2,3\\}\\)",
+      options: [
+        "\\(R = \\{1,2,3\\} \\times \\{1,2,3\\}\\)",
+        "\\(R = \\{(1,1),(2,2),(3,3)\\}\\)",
+        "\\(R = \\{(1,2),(2,3),(3,1)\\}\\)",
+        "\\(R = \\{(1,2),(2,1)\\}\\)"
+      ]
+    },
+    {
+      question: "Equivalence relations correspond to the number of partitions of the set \\(\\{1,2,3\\}\\). How many such partitions exist?",
+      correct: "\\(5\\)",
+      options: [
+        "\\(6\\)",
+        "\\(7\\)",
+        "\\(5\\)",
+        "\\(4\\)"
+      ]
+    }
+  ]
+},
+
+{
+  id: 7,
+  question: "Let the triangle \\(PQR\\) be the image of the triangle with vertices \\((1,3), (3,1)\\) and \\((2,4)\\) in the line \\(x + 2y = 2\\). If the centroid of \\(\\triangle PQR\\) is the point \\((\\alpha, \\beta)\\), then \\(15(\\alpha - \\beta)\\) is equal to:",
+
+  steps: [
+    {
+      question: "First find the centroid of the triangle with vertices \\((1,3), (3,1), (2,4)\\). What is the x-coordinate of the centroid?",
+      correct: "\\(2\\)",
+      options: [
+        "\\(2\\)",
+        "\\(\\frac{5}{3}\\)",
+        "\\(3\\)",
+        "\\(\\frac{8}{3}\\)"
+      ]
+    },
+    {
+      question: "What is the y-coordinate of the centroid?",
+      correct: "\\(\\frac{8}{3}\\)",
+      options: [
+        "\\(\\frac{7}{3}\\)",
+        "\\(\\frac{8}{3}\\)",
+        "\\(3\\)",
+        "\\(\\frac{5}{3}\\)"
+      ]
+    },
+    {
+      question: "Thus the centroid \\(G\\) of the original triangle is",
+      correct: "\\(\\left(2, \\frac{8}{3}\\right)\\)",
+      options: [
+        "\\(\\left(2, \\frac{8}{3}\\right)\\)",
+        "\\(\\left(\\frac{8}{3},2\\right)\\)",
+        "\\((2,3)\\)",
+        "\\(\\left(\\frac{5}{3},\\frac{8}{3}\\right)\\)"
+      ]
+    },
+    {
+      question: "The centroid of the image triangle is the reflection of \\(G\\) in the line \\(x+2y-2=0\\). For reflection in \\(ax+by+c=0\\), the parameter is \\(-\\frac{2(ax_0+by_0+c)}{a^2+b^2}\\). What is \\(ax_0+by_0+c\\) for \\(G(2,\\frac{8}{3})\\)?",
+      correct: "\\(\\frac{16}{3}\\)",
+      options: [
+        "\\(\\frac{10}{3}\\)",
+        "\\(\\frac{16}{3}\\)",
+        "\\(\\frac{14}{3}\\)",
+        "\\(6\\)"
+      ]
+    },
+    {
+      question: "Compute \\(-\\frac{2(ax_0+by_0+c)}{a^2+b^2}\\) for the reflection.",
+      correct: "\\(-\\frac{32}{15}\\)",
+      options: [
+        "\\(-\\frac{16}{15}\\)",
+        "\\(-\\frac{32}{15}\\)",
+        "\\(\\frac{32}{15}\\)",
+        "\\(-\\frac{16}{5}\\)"
+      ]
+    },
+    {
+      question: "Using the reflection formula, what is \\(\\alpha\\) (the x-coordinate of the reflected point)?",
+      correct: "\\(-\\frac{2}{15}\\)",
+      options: [
+        "\\(-\\frac{2}{15}\\)",
+        "\\(\\frac{2}{15}\\)",
+        "\\(-\\frac{4}{15}\\)",
+        "\\(\\frac{4}{15}\\)"
+      ]
+    },
+    {
+      question: "What is \\(\\beta\\) (the y-coordinate of the reflected point)?",
+      correct: "\\(-\\frac{24}{15}\\)",
+      options: [
+        "\\(-\\frac{24}{15}\\)",
+        "\\(-\\frac{16}{15}\\)",
+        "\\(\\frac{24}{15}\\)",
+        "\\(-\\frac{8}{15}\\)"
+      ]
+    },
+    {
+      question: "Finally compute \\(15(\\alpha-\\beta)\\).",
+      correct: "\\(22\\)",
+      options: [
+        "\\(24\\)",
+        "\\(19\\)",
+        "\\(21\\)",
+        "\\(22\\)"
       ]
     }
   ]
 }
+
 
 ];
