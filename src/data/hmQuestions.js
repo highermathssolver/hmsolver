@@ -410,7 +410,7 @@ export const hmQuestions = [
       ]
     },
     {
-      question: "What is the product of all solutions",
+      question: "What is the product of all solutions(x_1x_2 = ?)",
       correct: "\\(e^{\\frac{8}{5}}\\)",
       options: [
         "\\(e^{\\frac{6}{5}}\\)",
