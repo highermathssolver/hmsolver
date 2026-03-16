@@ -9,11 +9,18 @@ export default function PlanSidebar({
   const currentPlanIndex = steps[currentStep]?.planIndex ?? 0;
 
   return (
-    <div className="w-full h-full p-6">
+    <div
+  className="
+    w-full p-6
+    lg:fixed lg:right-0 lg:top-[72px] lg:h-[calc(100vh-72px)] lg:w-[300px]
+    lg:border-l lg:border-white/10 lg:bg-[#0f0f0f]
+    lg:overflow-y-auto
+  "
+>
 
-      <h2 className="text-xl font-semibold mb-6 text-white">
-        Plan of Attack
-      </h2>
+      <h2 className="hidden lg:block text-xl font-semibold mb-6 text-white">
+  Plan of Attack
+</h2>
 
       <div className="space-y-4">
 

@@ -69,7 +69,7 @@ export default function Solver() {
   };
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full lg:pr-[300px]">
 
       {/* MAIN CONTENT */}
       <div className="flex-1">
@@ -147,7 +147,7 @@ export default function Solver() {
       </div>
 
       {/* DESKTOP PLAN SIDEBAR */}
-      <div className="hidden lg:block w-[320px] border-l border-white/10 bg-black">
+      <div className="hidden lg:block">
 
         <PlanSidebar
           plan={questionData.plan}
