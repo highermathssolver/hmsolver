@@ -33,7 +33,11 @@ export default function SolutionPanel({
   const [stepTimeLocal, setStepTimeLocal] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
 
+  const [showWhy, setShowWhy] = useState(false);
+
   const stepRef = useRef(null);
+
+  /* TIMER */
 
   useEffect(() => {
 
@@ -59,13 +63,19 @@ export default function SolutionPanel({
 
   }, [isRunning]);
 
+  /* STEP PROGRESS */
+
   useEffect(() => {
 
     setStep(currentStep + 1);
     setTotalSteps(steps.length);
     setProgress((currentStep / steps.length) * 100);
 
-  }, [currentStep, steps]);
+    setShowWhy(false);
+
+  }, [currentStep]);
+
+  /* AUTO SCROLL */
 
   useEffect(() => {
 
@@ -81,6 +91,8 @@ export default function SolutionPanel({
     }, 300);
 
   }, [currentStep, completed]);
+
+  /* FINAL SAVE */
 
   const handleFinalSave = async () => {
 
@@ -112,6 +124,8 @@ export default function SolutionPanel({
     }
 
   };
+
+  /* OPTION CLICK */
 
   const handleClick = (opt) => {
 
@@ -169,6 +183,8 @@ export default function SolutionPanel({
   return (
     <div className="w-full max-w-3xl mx-auto space-y-6 pb-32">
 
+      {/* COMPLETED STEPS */}
+
       {completed.map((step, i) => (
         <motion.div
           key={i}
@@ -199,6 +215,10 @@ export default function SolutionPanel({
 
         {currentStep < steps.length && (
 
+          <>
+          
+          {/* STEP CARD */}
+
           <motion.div
             ref={stepRef}
             key={currentStep}
@@ -219,6 +239,8 @@ export default function SolutionPanel({
               </MathJax>
 
             </div>
+
+            {/* OPTIONS */}
 
             <div className="space-y-4">
 
@@ -255,6 +277,49 @@ export default function SolutionPanel({
             </div>
 
           </motion.div>
+
+          {/* WHY CARD (SEPARATE) */}
+
+          {steps[currentStep]?.why && (
+
+            <motion.div
+              className="bg-[#1a1a1a] border border-[#2a2a2a] rounded-2xl p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+
+              <button
+                onClick={() => setShowWhy(!showWhy)}
+                className="w-full flex justify-between items-center"
+              >
+
+                <span className="text-gray-300">
+                  Why this step?
+                </span>
+
+                <span className="text-gray-400">
+                  {showWhy ? "▲" : "▼"}
+                </span>
+
+              </button>
+
+              {showWhy && (
+
+                <div className="mt-4 p-4 rounded-xl bg-blue-900/20 border border-blue-500/30 text-gray-300">
+
+                  <MathJax dynamic>
+                    {steps[currentStep].why}
+                  </MathJax>
+
+                </div>
+
+              )}
+
+            </motion.div>
+
+          )}
+
+          </>
 
         )}
 
